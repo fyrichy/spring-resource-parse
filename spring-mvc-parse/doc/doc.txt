@@ -1,0 +1,12 @@
+在dispatcher-servlet.xml配置文件中配置
+<mvc:annotation-driven/>通过namespaceHolder原理，然后找到
+spring-webmvc.jar包下的META-INF包中的spring.handlers
+可以知道对应的解析类为MvcNamespaceHandler.java
+然后通过标签：annotation-driven---AnnotationDrivenBeanDefinitionParser
+AnnotationDrivenBeanDefinitionParser这个类的parse()方法中有一百多行，但是有一个
+RootBeanDefinition handlerMappingDef = new RootBeanDefinition(RequestMappingHandlerMapping.class);
+表示为容器注册一个RequestMappingHandlerMapping,这个简介实现了InitializingBean
+如下：
+	AbstractHandlerMethodMapping<T> extends AbstractHandlerMapping implements InitializingBean
+对于InitializingBean定义了afterPropertiesSet会在bean的实例化之前调用，也就是通过initHandlerMethods找到
+标有注解@RequestMapping类和方法，就是以注解的方式找到url-controller的映射方式，这就是注解的方式映射

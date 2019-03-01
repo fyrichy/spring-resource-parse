@@ -1,0 +1,43 @@
+1、关于标签属性depends-on
+	depends-on表示一个BeanA的实例化依靠另一个BeanB的实例化，如果在BeanA
+的标签上添加了depends-on="BeanB",那么就表示在实例化BeanA之前要先实例化BeanB
+
+2、这种情况下不同于ref属性标签
+
+3、比如说，DaoBean实例化之前你必须要先实例化DataBaseBean，然后DaoBean并不需要持有
+DataBaseBean的实例化对象，但是DaoBean的使用又必须依赖DataBaseBean的实例化后再
+启动，如果DataBaseBean不启动，那么DaoBean实例化也是不可用的，因此这种情况下的依赖
+不是直接的。
+4、示例：
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+   "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean name="dao" class="research.spring.beanfactory.ch3.Dao" depends-on="database">
+    </bean>
+    <bean id="database" class="research.spring.beanfactory.ch3.Database">
+    </bean>   
+</beans>
+
+
+5、例如下面的例子：
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean name="a" class="research.spring.beanfactory.ch3.A" depends-on="d,c,b" />
+<bean name="b" class="research.spring.beanfactory.ch3.B" />
+<bean name="c" class="research.spring.beanfactory.ch3.C" />
+<bean name="d" class="research.spring.beanfactory.ch3.D" />
+ 
+</beans>
+
+	上面的例子中A的实例化需要先实例化D，C，B。Spring会按照depend-on中定义的顺序来处理Bean。
+在这个例子里Spring实例化对象的顺利是D->C->B->A。虽然实例化对象的顺序和前面
+“A depends-on B && B depends-on C && C depends-on D”的情况一下，但是这里的意义是完全不同的。
+不能用“A depends-on D,C,B”代替“A depends-on B && B depends-on C && C depends-on D”。
+depends-on是一个非常又用的功能，借助depends-on我们可以管理那些依赖关系不明显或者没有直接依赖关系的对象。
+
+

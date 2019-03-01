@@ -1,0 +1,19 @@
+继承关系：
+	DispatcherServlet-->FrameworkServlet-->HttpServletBean
+	其中容器加载DispatcherServlet的时候执行init()方法，init()方法
+	定义在HttpServletBean中，然后再执行initServletBean()，该方法
+	定义在FrameworkServlet中，然执行this.webApplicationContext = initWebApplicationContext();
+	initWebApplicationContext()。
+
+分析方法initWebApplicationContext()
+	在该方法中先后执行了configureAndRefreshWebApplicationContext(cwac)和onRefresh(wac);
+	configureAndRefreshWebApplicationContext(cwac)方法主要是加载从dispatcher-servlet.xml
+	配置文件，然后解析注册，初始化所有的bean，默认是立即加载，也就是容器启动后就会实例化从dispatcher-servlet.xml
+	所有的bean。
+		对于SpringIOC对配置文件的定位，解析，注册，实例化的过程可以知道
+			在对bean实例化的时候会遍历所有实现BeanPostProcessor接口的类
+			然后执行postProcessBeforeInitialization，
+			再执行invokeInitMethods(beanName, wrappedBean, mbd);方法，在invokeInitMethods(beanName, wrappedBean, mbd);方法中
+			首先执行InitializingBean的afterPropertiesSet()方法，然后执行配置过<init-method>的方法
+			
+	

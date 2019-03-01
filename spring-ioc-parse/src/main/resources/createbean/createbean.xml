@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	
+	<!-- 无参构造函数 -->
+	<bean id="user" class="com.richy.spring.createbean.User"></bean>
+	
+	<!-- 调用有参构造函数 -->
+	<bean id="user01" class="com.richy.spring.createbean.User">
+		<constructor-arg name="id" value="001"/>
+		<constructor-arg name="name" value="user01"/>
+	</bean>
+	
+	<!-- 工厂方法创建对象 -->
+	
+	<!-- 1、非静态方法创建 -->
+	<bean id="userFactory" class="com.richy.spring.createbean.UserFactory"></bean>
+	<bean id="user02" factory-bean="userFactory" factory-method="getInstance"></bean>
+	<!-- 2、静态方法创建 -->
+	<bean id="user03" class="com.richy.spring.createbean.UserFactory" factory-method="getStaticInstance"></bean>
+</beans>
