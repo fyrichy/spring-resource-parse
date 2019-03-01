@@ -1,0 +1,6 @@
+一、被註解@ControllerAdvice標註過的類怎麼被納入Spring容器的：
+    首先：@ControllerAdvice註解被org.springframework.stereotype.Component標註過，
+       被org.springframework.stereotype.Component註解標註過的註解，如果再標註到某個類上，
+       通過<context:component-scan>可以掃描到，然後納入Spring容器管理
+   可以查看類com.richy.spring.handler.TestHandler給出的例子
+   
