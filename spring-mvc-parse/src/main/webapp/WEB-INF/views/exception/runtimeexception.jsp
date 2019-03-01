@@ -7,6 +7,6 @@
 <title>RunTimeException</title>
 </head>
 <body>
-	<h1>出异常了</h1>
+	<h1>出异常了,This Is Exception Page...</h1>
 </body>
 </html>
