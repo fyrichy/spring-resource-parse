@@ -11,7 +11,9 @@
   	<module>spring-ioc-parse</module>
   	<module>spring-aop-parse</module>
   	<module>spring-mvc-parse</module>
-</modules>
+  	<module>spring.asm.annotation</module>
+  	<module>spring-asm-annotation</module>
+  </modules>
 
 <dependencies>
   		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->

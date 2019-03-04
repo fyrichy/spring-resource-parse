@@ -1,0 +1,52 @@
+	1、Spring的註解使用方式：
+		首先在配置文件中配置：<context:component-scan/>標籤，
+		然後Spring岂容在启动初始化容器的时候就会将标有注解@Component，@Service，@Controller，@Reporsitry
+		的类纳入到容器中并进行初始化，所以在spring器加载完成，就能通过名称获取到bean的实例对象
+	
+	2、通过断点调试ContextNamespaceHandler类然后找到"component-scan"标签对应的类，找到ComponentScanBeanDefinitionParser进行对
+		Spring通过Asm解析注解，可以获取到标注在类上的注解，也可以获取到注解上的元注解，也就是标注在注解上的注解
+		
+	3、示例，在Spring的配置文件中通过配置<context:compenent-scan package=""/>通过制定包路径，然后扫描包路径下的class文件，然后再通过
+	  ASM进行字节码解析，获取到标注在类上面的注解和元注解。
+	  	在类：ClassPathScanningCandidateComponentProvider中有如下方法：
+      String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
+					resolveBasePackage(basePackage) + '/' + this.resourcePattern;
+		解析：resolveBasePackage(basePackage);
+			1、protected String resolveBasePackage(String basePackage) {
+					return ClassUtils.convertClassNameToResourcePath(getEnvironment().resolveRequiredPlaceholders(basePackage));
+				}
+			2、getEnvironment()：
+				public final Environment getEnvironment() {
+					if (this.environment == null) {
+						this.environment = new StandardEnvironment();
+					}
+					return this.environment;
+				}
+		Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
+		for(Resource resource:resources){
+			MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
+		}
+			跟踪方法内部：InputStream is = new BufferedInputStream(resource.getInputStream());
+			ClassReader classReader;
+			try {
+				classReader = new ClassReader(is);
+			}
+			catch (IllegalArgumentException ex) {
+				throw new NestedIOException("ASM ClassReader failed to parse class file - " +
+						"probably due to a new Java class file version that isn't supported yet: " + resource, ex);
+			}
+			finally {
+				is.close();
+			}
+			
+			AnnotationMetadataReadingVisitor visitor = new AnnotationMetadataReadingVisitor(classLoader);
+			classReader.accept(visitor, ClassReader.SKIP_DEBUG);
+			
+			所有的信息存放在visitor中
+			
+			AnnotationMetadataReadingVisitor属性：
+				annotationSet：所有标注在当前类的注解集合
+				metaAnnotationMap：元注解map集合
+				methodMetadataSet：元注解集合
+				
+			
