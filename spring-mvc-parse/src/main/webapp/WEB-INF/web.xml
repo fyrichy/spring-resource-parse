@@ -29,4 +29,14 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>*.html</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ExampleServlet</display-name>
+    <servlet-name>ExampleServlet</servlet-name>
+    <servlet-class>com.richy.spring.servlet.ExampleServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExampleServlet</servlet-name>
+    <url-pattern>/ExampleServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

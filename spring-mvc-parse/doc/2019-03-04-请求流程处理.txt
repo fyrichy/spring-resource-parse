@@ -1,0 +1,85 @@
+	一、请求的统一处理方法在DispatcherServlet的doDispatch(HttpServletRequest request, HttpServletResponse response)方法
+前提：
+	二、配置在dispatcher-servlet.xml配置文件中配置<mvc:annotation-driven/>
+		1、注册HandlerMapping:RequestMappingHandlerMapping
+			a、因为RequestMappingHandlerMapping间接实现了InitializingBean,对于InitializingBean
+			会在Spring容器实例化Bean的时候执行invokeInitMethods(beanName, wrappedBean, mbd);
+			这个方法的内部实现就是执行所有InitializingBean实现类的afterPropertiesSet()方法，由于
+			而RequestMappingHandlerMapping实现了afterPropertiesSet()方法
+				具体实现在AbstractHandlerMethodMapping的detectHandlerMethods()方法中，进行映射关系处理
+				步骤：因为之前通过<context:component-scan package=""/>将标注有@Controller注解的类纳入
+				到Spring容器中，所以现在通过beanName可以获取到对应的Class，然后遍历所有的类，如果有被标注@Controller或者
+				@RequestMapping，就进行对其所有方法的遍历将标注有@RequstMapping的方法的中的@RequestMaping信息和对应的
+				方法存储到Map集合中
+				public java.lang.String com.richy.spring.controller.ExceptionController.redirect(java.lang.String,java.lang.String)={[/exception/redirect]
+					handlerMethod：
+						bean：对应的类的名称：exceptionController
+						beanType：对应的类全限定名名称：class com.richy.spring.controller.ExceptionController
+						method：public java.lang.String com.richy.spring.controller.ExceptionController.redirect(java.lang.String,java.lang.String)
+					mapping：也就是@RequestMapping里面的所有信息
+						其中：partternCodintion：[/exception/redirect]
+					①、映射关系：mappingLookup.put(mapping, handlerMethod); 通过mapping--handlerMethod
+					②、映射关系：urlLookup.add(url, mapping); 通过url--mapping
+					由上面两个映射关系，可以通过请求的url找到对应的类的执行方法
+					③、映射关系：registry.put(mapping, new MappingRegistration<>(mapping, handlerMethod, directUrls, name));
+						通过mapping--mappingRegistration
+						mappingRegistration:
+							mapping
+							handlerMethod
+							directUrls
+							name:把url进行处理过的/exception/redirect--EC#redirect
+				总结：简言之，就是注册映射关系
+					
+			
+			
+		2、注册HandlerAdapter:RequestMappingHandlerAdapter
+	三、请求流程
+		1、通过DispatcherServlet的doDispatcher()方法来处理请求的url
+		2、HandlerExecutionChain mappedHandler = getHandler(processedRequest);
+			遍历所有的HandlerMapping，获取handler和intercepter[],由于在上面分析了注册的过程
+			所有通过url可以获取对应的handler和intercepter[],
+			①、对应请求的url进行解析，解析成符合@RequestMapping属性partternCondition的结构，
+			 因为注册的时候通过url--mapping，mapping--handlerMethod，所以首先通过url找到mapping
+			 然后再通过mapping找到HandlerMethod
+			 HandlerMethod handlerMethod = lookupHandlerMethod(lookupPath, request);
+			②、遍历拦截器链，分支handler(handlerMethod)和intercepter[]为HandlerExectionChain
+		3、获取HandlerAdapter：
+			就是判断HandlerExecutionChain里面的handler属性是否是HandlerMethod类型，如果是，则满足RequestMappingHandlerAdapter
+			因此返回RequestMappingHandlerAdapter
+		4、拦截器preHandle方法执行
+		5、Handler实际执行请求
+			mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	
