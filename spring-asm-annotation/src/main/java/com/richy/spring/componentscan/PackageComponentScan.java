@@ -30,6 +30,13 @@ public class PackageComponentScan {
 	
 	private static final String resourcePattern = DEFAULT_RESOURCE_PATTERN;
 
+	/**
+	 * @descrp：通过包扫描解析类上面的注解
+	 * @author：FyRichy
+	 * @time：2019年3月4日上午10:03:35
+	 * @param basePackage
+	 * @throws Exception
+	 */
 	public void scanPackages(String basePackage) throws Exception {
 		//解析包路径
 		String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX +
