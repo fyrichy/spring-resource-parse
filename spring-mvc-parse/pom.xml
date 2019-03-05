@@ -7,60 +7,6 @@
   </parent>
   <artifactId>spring-mvc-parse</artifactId>
   <packaging>war</packaging>
-  
-  <dependencies>
-  	 <dependency>
-  	 	 <groupId>org.springframework</groupId>
-		 <artifactId>spring-context</artifactId>
-  	 </dependency>
-  	 <dependency>
-  	 	<groupId>org.springframework</groupId>
-		<artifactId>spring-webmvc</artifactId>
-  	 </dependency>
-  	 <dependency>
-  	 	<groupId>org.springframework</groupId>
-		<artifactId>spring-context-support</artifactId>
-  	 </dependency>
-  	 <dependency>
-  	 	<groupId>org.aspectj</groupId>
-		<artifactId>aspectjweaver</artifactId>
-  	 </dependency>
-  	 <dependency>
-  	 	<groupId>javassist</groupId>
-		<artifactId>javassist</artifactId>
-  	 </dependency>
-  	 <dependency>
-	    <groupId>javax.servlet</groupId>
-	    <artifactId>javax.servlet-api</artifactId>
-	    <scope>provided</scope>
-	 </dependency>
-	 <dependency>
-		<groupId>commons-fileupload</groupId>
-		<artifactId>commons-fileupload</artifactId>
-	</dependency>
-	<dependency>
-	    <groupId>com.alibaba</groupId>
-	    <artifactId>fastjson</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>junit</groupId>
-	    <artifactId>junit</artifactId>
-	    <scope>test</scope>
-	</dependency>
-	<dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-    </dependency>
-     <dependency>
-    	<groupId>com.fasterxml.jackson.core</groupId>
-      	<artifactId>jackson-databind</artifactId>
-    </dependency>
-  </dependencies>
-  
   <build>
   	<plugins>
   		<plugin>

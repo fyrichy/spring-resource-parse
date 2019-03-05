@@ -16,7 +16,6 @@
 	  	<spring-version>5.0.10.RELEASE</spring-version>
 	  	<jackson-version>2.9.5</jackson-version>
 	</properties>
-	<dependencyManagement>
 		<dependencies>
   		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
@@ -94,5 +93,4 @@
       <version>${jackson-version}</version>
     </dependency>
   </dependencies>
-	</dependencyManagement>
 </project>
