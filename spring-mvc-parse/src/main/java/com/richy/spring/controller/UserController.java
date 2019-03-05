@@ -1,5 +1,6 @@
 package com.richy.spring.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -94,5 +95,23 @@ public class UserController {
 		System.out.println("======"+userId+"======");
 		User user = new User("user01",21, "This Is User01");
 		return user;
+	}
+	
+	
+	/**
+	 * @descrp：返回集合转换成json
+	 * @author：FyRichy
+	 * @time：2019年3月5日下午1:43:21
+	 * @return
+	 */
+	@RequestMapping("/findList")
+	@ResponseBody
+	public List<User> findList() {
+		List<User> users = new ArrayList<User>();
+		for(int i=0;i<10;i++) {
+			User user = new User("user"+i,21+i, "This Is User"+i);
+			users.add(user);
+		}
+		return users;
 	}
 }

@@ -9,21 +9,55 @@
   <packaging>war</packaging>
   
   <dependencies>
-  	<dependency>
-  	<!-- 配置如下，如果不配置，@ResponseBody返回的对象会报406错误 ，Spring5.0.X版本对应的jackson为2.9.5-->
+  	 <dependency>
+  	 	 <groupId>org.springframework</groupId>
+		 <artifactId>spring-context</artifactId>
+  	 </dependency>
+  	 <dependency>
+  	 	<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+  	 </dependency>
+  	 <dependency>
+  	 	<groupId>org.springframework</groupId>
+		<artifactId>spring-context-support</artifactId>
+  	 </dependency>
+  	 <dependency>
+  	 	<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+  	 </dependency>
+  	 <dependency>
+  	 	<groupId>javassist</groupId>
+		<artifactId>javassist</artifactId>
+  	 </dependency>
+  	 <dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <scope>provided</scope>
+	 </dependency>
+	 <dependency>
+		<groupId>commons-fileupload</groupId>
+		<artifactId>commons-fileupload</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>com.alibaba</groupId>
+	    <artifactId>fastjson</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>junit</groupId>
+	    <artifactId>junit</artifactId>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-annotations</artifactId>
-      <version>2.9.5</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.9.5</version>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>2.9.5</version>
+     <dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+      	<artifactId>jackson-databind</artifactId>
     </dependency>
   </dependencies>
   
