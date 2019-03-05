@@ -18,6 +18,27 @@
 		<mvc:argument-resolvers>
 			<bean class="com.richy.spring.resolver.ComposeArgumentResolver"/>
 		</mvc:argument-resolvers>
+		<!-- 配置如下，如果不配置，@ResponseBody返回的对象会报406错误 -->
+		<mvc:message-converters>
+            <!-- 设置返回字符串编码 -->
+            <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name = "supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+            <!-- json转换器 -->
+            <bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
 	</mvc:annotation-driven>
 		
 	
@@ -35,4 +56,5 @@
        <property name="prefix" value="/WEB-INF/views"></property>
        <property name="suffix" value=".jsp"></property>
    </bean>
+   
 </beans>

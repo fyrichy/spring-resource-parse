@@ -1,12 +1,30 @@
 package com.richy.spring.model;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private Integer age;
 	private String description;
 	public String getName() {
 		return name;
+	}
+	public User(String name, Integer age, String description) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.description = description;
+	}
+	
+	
+	
+	public User() {
+		super();
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -27,6 +45,7 @@ public class User {
 	public String toString() {
 		return "User [name=" + name + ", age=" + age + ", description=" + description + "]";
 	}
+	
 	
 	
 }

@@ -7,6 +7,26 @@
   </parent>
   <artifactId>spring-mvc-parse</artifactId>
   <packaging>war</packaging>
+  
+  <dependencies>
+  	<dependency>
+  	<!-- 配置如下，如果不配置，@ResponseBody返回的对象会报406错误 ，Spring5.0.X版本对应的jackson为2.9.5-->
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <version>2.9.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>2.9.5</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.5</version>
+    </dependency>
+  </dependencies>
+  
   <build>
   	<plugins>
   		<plugin>

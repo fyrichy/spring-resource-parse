@@ -1,0 +1,5 @@
+	read：读，通常是将http请求的参数转换成为java对象
+	write：写，通常是将返回值转换成为http相应报文
+	
+	HandlerMethodArgumentResolver:参数解析器接口
+	HandlerMethodReturnValueHandler:返回值处理接口

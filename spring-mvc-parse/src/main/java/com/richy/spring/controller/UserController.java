@@ -16,17 +16,12 @@ public class UserController {
 
 	
 	/**
-	 * @descrp£º
-	 * 	@RequestBody×¢½â¿ÉÒÔ½«½ÓÊÕµÄJSON¸ñÊ½Êı¾İ×ª»»³ÉÎªJAVA¶ÔÏó
-	 *  @ResponseBody×¢½â¿ÉÒÔ½«java¶ÔÏó×ª»»³ÉJSON¸ñÊ½µÄÊı¾İÏìÓ¦¸ø¿Í»§¶Ë
-	 *  
-	 *   Èç¹û¿Í»§¶ËÍ¨¹ı±íµ¥µÄĞÎÊ½·¢ËÍÊı¾İ£¬Ö»Òª×Ö¶Î¶ÔÓ¦µÄÉÏ£¬ÊôĞÔÄÜ½ÓÊÜµÄµ½
-	 * @author£ºFyRichy
-	 * @time£º2019Äê2ÔÂ28ÈÕÉÏÎç9:13:15
-	 * @param user
+	 * @descrpï¼šä½¿ç”¨ @RequestBodyæ¥å—jsonä¸²æ•°ç»„
+	 * @authorï¼šFyRichy
+	 * @timeï¼š2019å¹´3æœˆ5æ—¥ä¸Šåˆ9:13:43
+	 * @param users
 	 * @return
 	 */
-	
 	@RequestMapping("/findAll")
 	@ResponseBody
 	public String findAll(@RequestBody List<User> users) {
@@ -47,9 +42,9 @@ public class UserController {
 	
 	
 	/**
-	 * descrp£º×éºÏ²ÎÊı£¬°üº¬TeacherºÍUserµÄÊµÀı¶ÔÏó
-	 * @author£ºFyRichy
-	 * @time£º2019Äê2ÔÂ28ÈÕÏÂÎç1:59:12
+	 * @descrpï¼šä½¿ç”¨@RequestBodyè§£æç»„åˆå‚æ•°jsonä¸²
+	 * @authorï¼šFyRichy
+	 * @timeï¼š2019å¹´3æœˆ5æ—¥ä¸Šåˆ9:13:16
 	 * @param compose
 	 * @return
 	 */
@@ -61,9 +56,9 @@ public class UserController {
 	
 	
 	/**
-	 * @descrp£º×Ô¶¨Òå²ÎÊı½âÎöÆ÷ÊµÏÖ
-	 * @author£ºFyRichy
-	 * @time£º2019Äê2ÔÂ28ÈÕÏÂÎç2:11:41
+	 * @descrpï¼šå®ç°è‡ªå®šä¹‰çš„HandlerMethodArgumentResolverï¼Œè§£æç»„åˆå‚æ•°
+	 * @authorï¼šFyRichy
+	 * @timeï¼š2019å¹´3æœˆ5æ—¥ä¸Šåˆ9:12:49
 	 * @param compose
 	 * @return
 	 */
@@ -73,4 +68,31 @@ public class UserController {
 		return compose.toString();
 	}
 	
+	/**
+	 * @descrpï¼šjsonä¸²å‚æ•°è¯·æ±‚
+	 * @authorï¼šFyRichy
+	 * @timeï¼š2019å¹´3æœˆ5æ—¥ä¸Šåˆ9:08:22
+	 * @param jsonStr
+	 * @return
+	 */
+	@RequestMapping("/normalArgs")
+	@ResponseBody
+	public String normalArgs(@RequestBody String jsonStr) {
+		return jsonStr;
+	}
+	
+	/**
+	 * @descrpï¼š@ResponseBodyè¿”å›ä¸€ä¸ªå¯¹è±¡
+	 * @authorï¼šFyRichy
+	 * @timeï¼š2019å¹´3æœˆ5æ—¥ä¸Šåˆ9:54:24
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping("/findById")
+	@ResponseBody
+	public User findById(String userId) {
+		System.out.println("======"+userId+"======");
+		User user = new User("user01",21, "This Is User01");
+		return user;
+	}
 }
