@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:websocket="http://www.springframework.org/schema/websocket" 
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+		
+	<!-- 
+		而 Spring 就不同了，
+		我们希望 Spring 只不扫描带有 @Controller 注解标注的类，
+		而扫描其他注解标注的类，而这时建立在使用默认的 Filter 进行扫描的基础上，
+		设置了 context:exclude-filter 标签，不扫描 @Controller 注解标注的类，
+		所以不应该设置 use-default-filters 为 false，
+		所以这就解释了为什么一开始启动 Tomcat 时报了一个找不到 Service 的错误。
+	 -->
+	<context:component-scan base-package="com.richy.spring">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+</beans>

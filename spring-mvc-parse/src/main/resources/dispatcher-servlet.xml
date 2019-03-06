@@ -30,28 +30,30 @@
                 </property>
             </bean> -->
             <!-- json转换器 -->
-            <!-- <bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+            <bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
-            </bean> -->
-            <bean id="jsonHttpMessageConverter" class="com.richy.spring.messageconverter.JsonHttpMessageConverter">
+            </bean>
+            <!-- <bean id="jsonHttpMessageConverter" class="com.richy.spring.messageconverter.JsonHttpMessageConverter">
             	<property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
-            </bean>
+            </bean> -->
         </mvc:message-converters>
 	</mvc:annotation-driven>
 		
 	
 	<!-- 通过扫描将特定注解的bean纳入SpringIOC容器中 -->
-	<context:component-scan base-package="com.richy.spring"/>
+	<context:component-scan base-package="com.richy.spring.scan">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
 	
 	<!-- 文件上传解析器 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

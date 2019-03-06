@@ -1,0 +1,68 @@
+源码解析:
+	<context:component-scan package="" use-default-filters="">
+		<context:exclude-filter type="annotation" expression=""/>
+		<context:include-filter type="annotation" expression=""/>
+	</context>
+	
+1、<context:component-scan/>属于spring的自定义标签，通过ContextNamespaceHandler进行注册解析，
+	通过查看ContextNamespaceHandler发现：
+	registerBeanDefinitionParser("component-scan", new ComponentScanBeanDefinitionParser());
+	因此对于包扫描的所有操作都在ComponentScanBeanDefinitionParser类的parse()方法中，
+2、对于属性use-default-filters默认为true，如果true，则includeFilters集合会添加近@Component，
+   javax.annotation.ManagedBean，avax.inject.Named对应的注解扫描器，
+3、在扫描包的时候，会将包下的所有的class类全部扫描进来，然后进行asm字节码进行解析，可以获取的对应类的注解和元注解，
+	什么是注解和元注解？
+		对于自定义类SpringController，标准@Controller注解，而在@Controller类上标注了@Component注解
+		那么当通过asm字节码解析时，会将SpringController的全全限定名，注解@Controller全限定名，@Component全限定名
+		封装在MetadataReader实例对象中
+		MetadataReader:实现类SimpleMetadataReader
+			集合属性：AnnotationMetadataReadingVisitor：
+				①、annotationSet：在SpringController上的注解集合：[org.springframework.stereotype.Controller]
+				②、attributeMap：封装了注解和元注解的k-v map集合
+				{org.springframework.stereotype.Controller=[{
+					value=org.springframework.core.annotation.AnnotationUtils$DefaultValueHolder@3636ac7c}], 
+					org.springframework.stereotype.Component=[{value=}], org.springframework.stereotype.Indexed=[{}]}
+			    ③、className：自定义类全限定名：com.richy.spring.scan.SpringController
+    也就是通过类：ClassPathScanningCandidateComponentProvider的scanCandidateComponents方法里面的
+    	MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
+    可以将一个类的全限定名和注解以及元注解全部封装起来
+4、进行过滤操作：	
+	isCandidateComponent(metadataReader)：
+		//过滤掉不需要的注解
+		for (TypeFilter tf : this.excludeFilters) {
+			if (tf.match(metadataReader, getMetadataReaderFactory())) {
+				return false;
+			}
+		}
+		//只需要的注解
+		for (TypeFilter tf : this.includeFilters) {
+			if (tf.match(metadataReader, getMetadataReaderFactory())) {
+				return isConditionMatch(metadataReader);
+			}
+		}
+	 ①、excludeFilters：表示配置需要过滤掉的注解，也就是如果在<context:exclude-filter type="annotation" expression=""/>
+	 	指定了注解，那么对应的类就不会被纳入到Spring容器中
+	 ②、如果配置了use-default-filters="false",那么this.includeFilters不会加载默认的注解@Component...，表示不会使用默认的方式进行匹配，
+	    会将标注了<context:include-filter type="annotation" expression=""/>指定的注解的类纳入到Spring容器中去
+	    
+	 所以，默认情况或是use-default-filters="true",表示会将标有注解@Controller，@Service，@Component，@Reposity的类纳入到Spring容器中
+	 如果配置了use-default-filters="false",那么在<context:include-filter type="annotation" expression=""/>需要指定注解，如果没有
+	 指定，那么所有的 类都不会纳入Spring容器中，所以通常在配置springmvc-servlet.xml中时，只需要Controller类所以如下配置：
+	 
+	 springmvc-servlet.xml
+	 -----------------------------------------------------------------------------------------------------
+	 <context:component-scan package="com.richy.spring" use-default-filters="false">
+	 	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	 </context:component-scan>
+	 -----------------------------------------------------------------------------------------------------
+	 表示只将包com.richy.spring下的标注有@Controller的类纳入到子容器中
+	 
+	 applicationContext.xml
+	 ---------------------------------------------------------------------------------------------------------
+	 <context:component-scan base-package="com.richy.spring">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	 </context:component-scan>
+	----------------------------------------------------------------------------------------------------------
+	 表示会将@Service,@Reposity标注的类，分表表示Service层和dao层，纳入到父容器中，把标注有 @Controller的类从父容器过滤掉
+	
+	

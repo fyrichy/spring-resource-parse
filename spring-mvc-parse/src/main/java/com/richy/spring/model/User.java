@@ -2,6 +2,9 @@ package com.richy.spring.model;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User implements Serializable{
 
 	/**
