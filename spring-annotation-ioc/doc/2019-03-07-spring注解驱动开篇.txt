@@ -54,8 +54,47 @@
 
 -----------------------------------------------------------------------------------------------------------------
 
+五、@EnableAspectJAutoProxy注解：
+	之前使用AOP的时候，注解+xml的配置方式，
+		定义一个切面类：该类使用@Aspect标注
+		然后定义一个切入点：标注@Pointcut，就是针对某些类的某些方法进行操作
+		定义前置增强：@Before
+		后置增强：@After
+		环绕增强：@Around
+		@AfterReturning
+		异常增强：@AfterThrowing
+		
+		然后需要在配置文件夹中配置：<aop:aspectj-autoproxy/>
+		将实体类和切面类配置到配置文件中
+		
+		现在的方式：切面类还是像以前一样，只是需要额外定义一个类作为配置类
+----------------------------------------------------------------------------------------------------------------------
+package com.richy.spring.aop;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+/**
+ * @descrp：aop配置类
+ * @author：FyRichy
+ * @time：2019年3月7日下午2:22:20
+ */
+@Configuration
+@EnableAspectJAutoProxy
+public class AopConfig {
+
+	@Bean
+	public AopAspectJClass aopAspectJClass() {
+		return new AopAspectJClass();
+	}
+	
+	@Bean
+	public StudentService studentService() {
+		return new StudentService();
+	}
+}
+----------------------------------------------------------------------------------------------------------------------
 
 
 
