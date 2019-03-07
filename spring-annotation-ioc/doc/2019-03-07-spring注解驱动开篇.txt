@@ -1,0 +1,4 @@
+首先需要了解的：
+	1、AnnotationConfigApplicationContext,这是spring为扩展注解而新增的一个类
+	2、使用@Configuration注解代替配置文件applicationContext.xml
+	3、使用@Bean注解代替<bean id="" class=""/>标签

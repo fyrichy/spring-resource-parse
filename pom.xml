@@ -10,6 +10,7 @@
   	<module>spring-mvc-parse</module>
   	<module>spring.asm.annotation</module>
   	<module>spring-asm-annotation</module>
+  	<module>spring-annotation-ioc</module>
   </modules>
 	<properties>
 	  	<junit-version>4.3</junit-version>
