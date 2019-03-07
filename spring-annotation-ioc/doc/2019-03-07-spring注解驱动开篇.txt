@@ -4,7 +4,7 @@
 	3、使用@Bean注解代替<bean id="" class=""/>标签
 
  注解学习：
- 	@Import:通过导入的方式实现把实例加入Spring的IOC容器中,类似于在applicationContext.xml配置文件中使用<import resource=""/>
+ 一、@Import:通过导入的方式实现把实例加入Spring的IOC容器中,类似于在applicationContext.xml配置文件中使用<import resource=""/>
  	标签；
  	使用方式：
  		@Configuration
@@ -20,3 +20,19 @@
 			1、直接在后面填写Class就会将其加入到Spring的容器中
 			2、通过自定义ImportSelector接口的实现类的方式
 			3、通过自定义ImportBeanDefinitionRegistrar接口实现类的方式
+-----------------------------------------------------------------------------------------------------------------------
+二、@Conditional注解：可以根据一些自定义的条件动态的选择是否加载该bean到spring容器中去，而且@Conditional注解在springboot中大量使用
+	@Conditional注解可以标注在类上，也可以标注在方法上
+	可以通过实现Condition接口，然后定义业务条件，进行选择是否将对应的实例加载到spring容器中去
+	
+	public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+		//获取当前的系统环境（Windows 7）
+		Environment env = context.getEnvironment();
+		String system = env.getProperty("os.name");
+		System.out.println("当前的系统环境为:"+system);
+		if("Windows 72".equals(system)) {
+			return true;
+		}
+		return false;
+	}
+----------------------------------------------------------------------------------------------------------------------------
