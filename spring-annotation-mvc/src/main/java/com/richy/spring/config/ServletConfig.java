@@ -1,13 +1,15 @@
 package com.richy.spring.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 /**
  * @descrp：web容器，只扫描@Controller标注的类
@@ -19,29 +21,39 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 				includeFilters= {
 					@Filter(type=FilterType.ANNOTATION,classes= {Controller.class})
 			})
-@EnableWebMvc
-public class ServletConfig  extends WebMvcConfigurerAdapter{
+//@EnableWebMvc
+public class ServletConfig implements WebMvcConfigurer{
 
 	/**
 	 * @descrp：定制视图解析器
 	 * @author：FyRichy
-	 * @time：2019年3月7日下午3:12:14
+	 * @time：2019年3月7日下午5:05:28
+	 * @return
+	 */
+	@Bean
+	public InternalResourceViewResolver resourceViewResolver() {
+		return new InternalResourceViewResolver("/WEB-INF/views/",".jsp");
+	}
+	
+	
+	/**
+	 * @descrp：视图配置
+	 * @author：FyRichy
+	 * @time：2019年3月7日下午5:06:54
 	 * @param registry
 	 */
-	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.jsp("/WEB-INF/views/", ".jsp");
+		registry.viewResolver(resourceViewResolver());
 	}
 	
 	/**
-	 * @descrp：静态资源访问
+	 * @descrp：静态资源配置
 	 * @author：FyRichy
-	 * @time：2019年3月7日下午3:12:44
-	 * @param configurer
+	 * @time：2019年3月7日下午5:08:44
+	 * @param registry
 	 */
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		// TODO Auto-generated method stub
-		configurer.enable();
-	}
+	/*public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		System.out.println("静态资源访问路径配置.....");
+		registry.addResourceHandler("images/**").addResourceLocations("/static/images");
+	}*/
 }

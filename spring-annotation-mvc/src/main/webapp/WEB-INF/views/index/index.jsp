@@ -7,6 +7,7 @@
 <title>SpringMVC</title>
 </head>
 <body>
-	SpringMVC Annotation...........
+	SpringMVC Annotation...........<br/>
+	<img alt="静态资源图片" src="/static/images/springmvc.png">
 </body>
 </html>
