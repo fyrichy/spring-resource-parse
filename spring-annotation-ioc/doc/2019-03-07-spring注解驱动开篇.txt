@@ -37,6 +37,22 @@
 	}
 ----------------------------------------------------------------------------------------------------------------------------
 三、@PropertySource注解：结合@Value一起使用
+--------------------------------------------------------------------------------------------
+
+四、@ComponentScan注解，就是将配置<context:component-scan package="" use-default-filters=""/>使用注解替代
+
+	@ComponentScan(basePackages= {"com.richy.spring.componentscan"},useDefaultFilters=false,
+	includeFilters= {
+		@Filter(type=FilterType.ANNOTATION,value= {Controller.class}),
+		@Filter(type=FilterType.CUSTOM,value= {ServiceFilter.class})
+	})
+	跟下面使用标签的方式：
+	<context:component-scan package="com.richy.spring.componentscan" use-default-filters="false">
+		<context:include-filter type="ANNOTATION" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="CUSTOM" expression="com.richy.spring.annotaion.FyRichy"/>
+	</context:component-scan>
+
+-----------------------------------------------------------------------------------------------------------------
 
 
 
