@@ -58,6 +58,7 @@
 		<!-- 最大byte数 -->
 		<property name="maxUploadSize" value="5242880"></property>
 	</bean>
+	
 		
 	<!-- 自定义视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
