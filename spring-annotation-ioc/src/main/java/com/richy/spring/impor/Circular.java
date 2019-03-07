@@ -1,4 +1,4 @@
-package com.richy.spring.model;
+package com.richy.spring.impor;
 
 /**
  * @descrp：

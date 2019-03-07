@@ -3,13 +3,18 @@ package com.richy.spring.test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.richy.spring.config.PolygonConfig;
+import com.richy.spring.config.ApplicationContextConfig;
 import com.richy.spring.model.User;
 
-public class PolygonConfigTest {
+/**
+ * descrp：
+ * @author：FyRichy
+ * @time：2019年3月7日上午10:27:55
+ */
+public class MainTest {
 
 	public static void main(String[] args) {
-		ApplicationContext ac = new AnnotationConfigApplicationContext(PolygonConfig.class);
+		ApplicationContext ac = new AnnotationConfigApplicationContext(ApplicationContextConfig.class);
 		//获取容器中所有注册的bean
 		String[] beanNames = ac.getBeanDefinitionNames();
 		System.out.println("-------------All Beans---------------");

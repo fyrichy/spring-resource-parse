@@ -15,3 +15,8 @@
 		但是对于Circular和Square类，在spring容器的中的beanName（名称）为全限定名称
 		如果是通过@Configuration则在spring容器中的beanName为类名称的首字母小写
 		@Bean是方法名称，也可以自定义名称
+		
+		@Import支持三种方式
+			1、直接在后面填写Class就会将其加入到Spring的容器中
+			2、通过自定义ImportSelector接口的实现类的方式
+			3、通过自定义ImportBeanDefinitionRegistrar接口实现类的方式
