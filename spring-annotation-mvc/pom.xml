@@ -7,4 +7,18 @@
   </parent>
   <artifactId>spring-annotation-mvc</artifactId>
   <packaging>war</packaging>
+  <build>
+  	<plugins>
+  		<plugin>
+		<groupId>org.apache.tomcat.maven</groupId>
+		<artifactId>tomcat7-maven-plugin</artifactId> 
+		<configuration>
+			<!-- 指定端口 -->
+			<port>9091</port>
+			<!-- 请求路径 -->
+			<path>/</path>
+		</configuration>
+   </plugin>
+  	</plugins>
+  </build>
 </project>
