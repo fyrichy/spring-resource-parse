@@ -3,8 +3,10 @@ package com.richy.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 				includeFilters= {
 					@Filter(type=FilterType.ANNOTATION,classes= {Controller.class})
 			})
-//@EnableWebMvc
+@EnableWebMvc
 public class ServletConfig implements WebMvcConfigurer{
 
 	/**
@@ -48,12 +50,16 @@ public class ServletConfig implements WebMvcConfigurer{
 	
 	/**
 	 * @descrp：静态资源配置
+	 * 		表示如果要访问/WEB-INF/static/下的资源：
+	 * 		/WEB-INF/static/images/----/resources/images/
+	 *        .....
 	 * @author：FyRichy
 	 * @time：2019年3月7日下午5:08:44
 	 * @param registry
 	 */
-	/*public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		System.out.println("静态资源访问路径配置.....");
-		registry.addResourceHandler("images/**").addResourceLocations("/static/images");
-	}*/
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	System.out.println("静态资源配置调用....");
+        registry.addResourceHandler("/resources/**")
+        	.addResourceLocations("/WEB-INF/static/");
+    }
 }

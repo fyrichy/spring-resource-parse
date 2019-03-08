@@ -8,6 +8,6 @@
 </head>
 <body>
 	SpringMVC Annotation...........<br/>
-	<img alt="静态资源图片" src="/static/images/springmvc.png">
+	<img alt="静态资源图片" src="/resources/images/springmvc.png">
 </body>
 </html>

@@ -38,13 +38,15 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	 * @descrp：获取DispatcherServlet的映射信息
 	 * 	/：拦截所有请求（包括静态资源（xx.js,xx.png）），但是不包括*.jsp；
 	 *  /*：拦截所有请求；连*.jsp页面都拦截；jsp页面是tomcat的jsp引擎解析的；
+	 *  
+	 *  备注：只有配置了"/"那么在静态资源映射才能起作用，不然如果配置成为*.html那么静态资源就不起作用了
 	 * @author：FyRichy
 	 * @time：2019年3月7日下午3:03:11
 	 * @return
 	 */
 	@Override
 	protected String[] getServletMappings() {
-		return new String[]{"*.html"};
+		return new String[]{"/"};
 	}
 
 }
