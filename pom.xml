@@ -12,6 +12,7 @@
   	<module>spring-asm-annotation</module>
   	<module>spring-annotation-ioc</module>
   	<module>spring-annotation-mvc</module>
+  	<module>spring-mvc-mybatis</module>
   </modules>
 	<properties>
 	  	<junit-version>4.3</junit-version>

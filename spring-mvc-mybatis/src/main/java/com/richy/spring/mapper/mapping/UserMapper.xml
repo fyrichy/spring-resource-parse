@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.richy.spring.mapper.UserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.richy.spring.model.User">
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="AGE" property="age" jdbcType="NUMERIC" />
+    <result column="SEX" property="sex" jdbcType="VARCHAR" />
+    </resultMap>
+
+	<!-- 查询所有 -->
+	<select id="findAll" resultType="com.richy.spring.model.User">
+		SELECT ID,NAME,AGE,SEX FROM T_USER
+	</select>
+	
+	<!-- 新增用户 -->
+	<insert id="addUser">
+		insert into t_user(ID,NAME,AGE,SEX) values(#{id},#{name},#{age},#{sex});
+	</insert>
+</mapper>

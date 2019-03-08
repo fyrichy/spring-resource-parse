@@ -1,0 +1,40 @@
+spring+springmvc+mybatis
+	mybatis支持注解版sql，也支持xml的动态sql
+
+	注意1：
+		sql使用xml方式：需要指定xxxMapper.xml的包路径：mybatis.mapper.locations=classpath:com/richy/spring/mapper/mapping/*.xml
+		然后在配置SqlSessionFactoryBean的时候指定：
+		PathMatchingResourcePatternResolver classPathResource = new PathMatchingResourcePatternResolver();
+		sqlSessionFactoryBean.setMapperLocations(classPathResource.getResources(getMapperLocations()));
+		
+	注意2：
+		@ResponseBody注解如果返回对象的时候，springmvc默认没有处理对java对象和json的转换
+		此时需要添加第三方jar包：版本不能错：
+		<dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-annotations</artifactId>
+	      <version>2.9.5</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-core</artifactId>
+	      <version>2.9.5</version>
+	    </dependency>
+	    <dependency>
+	      <groupId>com.fasterxml.jackson.core</groupId>
+	      <artifactId>jackson-databind</artifactId>
+	      <version>2.9.5</version>
+	    </dependency>
+	    
+	    需要定义实现WebMvcConfigurer然后在方法extendMessageConverters重写MappingJackson2HttpMessageConverter支持的类型：
+	     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+	    	MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+	    	List<MediaType> jsonMediaTypes = new ArrayList<MediaType>(3);
+	    	jsonMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+	        jsonMediaTypes.add(MediaType.TEXT_HTML);
+	    	converter.setSupportedMediaTypes(jsonMediaTypes);
+	    	converters.add(converter);
+	    }
+	    
+	    
+	    
