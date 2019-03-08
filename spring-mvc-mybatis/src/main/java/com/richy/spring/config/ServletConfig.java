@@ -3,13 +3,13 @@ package com.richy.spring.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -33,10 +33,12 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 					@Filter(type=FilterType.ANNOTATION,classes= {Controller.class})
 			   }
 		)
-@PropertySource("classpath:web.properties")
+@Import({PropertiesConfig.class})
 public class ServletConfig implements WebMvcConfigurer{
 
-
+	@Autowired
+	PropertiesConfig propertiesConfig;
+	
 	/**
 	 * @descrp：定制视图解析器
 	 * @author：FyRichy
@@ -45,7 +47,7 @@ public class ServletConfig implements WebMvcConfigurer{
 	 */
 	@Bean
 	public InternalResourceViewResolver resourceViewResolver() {
-		return new InternalResourceViewResolver(getViewPrefix(),getViewSuffix());
+		return new InternalResourceViewResolver(propertiesConfig.getViewPrefix(),propertiesConfig.getViewSuffix());
 	}
 	
 	/**
@@ -69,8 +71,8 @@ public class ServletConfig implements WebMvcConfigurer{
 	 */
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	System.out.println("静态资源配置调用....");
-        registry.addResourceHandler(getStaticHandler())
-        	.addResourceLocations(getStaticLocations());
+        registry.addResourceHandler(propertiesConfig.getStaticHandler())
+        	.addResourceLocations(propertiesConfig.getStaticLocations());
     }
     
     /**
@@ -96,51 +98,4 @@ public class ServletConfig implements WebMvcConfigurer{
     	converter.setSupportedMediaTypes(jsonMediaTypes);
     	converters.add(converter);
     }
-    
-    
-    
-    
-    
-    @Value("${spring.web.view.prefix}")
-	private String viewPrefix;
-	@Value("${spring.web.view.suffix}")
-	private String viewSuffix;
-	@Value("${spring.web.static.handler}")
-	private String staticHandler;
-	@Value("${spring.web.static.locations}")
-	private String staticLocations;
-	
-	
-	
-	public String getViewPrefix() {
-		return viewPrefix;
-	}
-
-	public void setViewPrefix(String viewPrefix) {
-		this.viewPrefix = viewPrefix;
-	}
-
-	public String getViewSuffix() {
-		return viewSuffix;
-	}
-
-	public void setViewSuffix(String viewSuffix) {
-		this.viewSuffix = viewSuffix;
-	}
-
-	public String getStaticHandler() {
-		return staticHandler;
-	}
-
-	public void setStaticHandler(String staticHandler) {
-		this.staticHandler = staticHandler;
-	}
-
-	public String getStaticLocations() {
-		return staticLocations;
-	}
-
-	public void setStaticLocations(String staticLocations) {
-		this.staticLocations = staticLocations;
-	}
 }

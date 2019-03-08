@@ -9,46 +9,28 @@ import org.springframework.context.annotation.PropertySource;
  * @author：FyRichy
  * @time：2019年3月8日上午10:29:19
  */
-@Configuration("propertiesConfig")
-@PropertySource("classpath:application.properties")
+@Configuration
+@PropertySource("classpath:db.properties")
 public class PropertiesConfig {
-	//数据库用户名
+
 	@Value("${spring.datasource.user}")
 	private String user;
-	
-	//数据库密码
 	@Value("${spring.datasource.password}")
 	private String password;
-	
-	//数据库连接驱动
 	@Value("${spring.datasource.dirver}")
 	private String dirverClass;
-	
-	//数据库url
 	@Value("${spring.datasource.url}")
 	private String url;
-	
-	//视图文件前缀
 	@Value("${spring.web.view.prefix}")
 	private String viewPrefix;
-	
-	//视图文件后缀
 	@Value("${spring.web.view.suffix}")
 	private String viewSuffix;
-	
-	//静态文件的访问路径
 	@Value("${spring.web.static.handler}")
 	private String staticHandler;
-	
-	//静态文件的本地映射路径
 	@Value("${spring.web.static.locations}")
 	private String staticLocations;
-	
-	//mybati实体类的包路径，用作别名
 	@Value("${mybatis.type.alias.package}")
 	private String typeAliasPackage;
-	
-	//mapping文件的包路径
 	@Value("${mybatis.mapper.locations}")
 	private String mapperLocations;
 
