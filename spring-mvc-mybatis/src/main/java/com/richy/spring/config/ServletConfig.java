@@ -70,7 +70,6 @@ public class ServletConfig implements WebMvcConfigurer{
 	 * @param registry
 	 */
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    	System.out.println("静态资源配置调用....");
         registry.addResourceHandler(propertiesConfig.getStaticHandler())
         	.addResourceLocations(propertiesConfig.getStaticLocations());
     }
