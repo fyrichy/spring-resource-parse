@@ -7,6 +7,13 @@
   </parent>
   <artifactId>spring-annotation-mvc</artifactId>
   <packaging>war</packaging>
+  <dependencies>
+  		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.14</version>
+		</dependency>
+  </dependencies>
   <build>
   	<plugins>
   		<plugin>
