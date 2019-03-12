@@ -1,2 +1,0 @@
-    源码解析BeanFactoryPostProcessor的入口
-    从方法invokeBeanFactoryPostProcessors(beanFactory)
