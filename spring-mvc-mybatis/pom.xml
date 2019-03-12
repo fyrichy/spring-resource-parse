@@ -59,6 +59,14 @@
 	   	</plugin>
   	</plugins>
   	 <resources>
+		 <!--解决项目启动时加载不到.xml文件和.properties文件-->
+		 <resource>
+			 <directory>src/main/resources</directory>
+			 <includes>
+				 <include>**/*.properties</include>
+			 </includes>
+			 <filtering>false</filtering>
+		 </resource>
 		  <resource>
 			  <directory>src/main/java</directory>
 			  <includes>
