@@ -1,5 +1,0 @@
-2019年3月12日：
-  源码解析spring中的BeanFactoryPostProcessor；
-  在类ClassPathXmlApplicationContext和AnnotationConfigApplicationContext类中都有refresh()方法，中间会初始化很多的组件
- 其中就有invokeBeanFactoryPostProcessors(beanFactory)方法，我们就以这个方法为入口，看看源码中对于BeanFactoryPostProcessor
- 做了什么。

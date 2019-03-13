@@ -1,0 +1,103 @@
+2019年3月13日：
+  	源码解析spring中的AnnotationConfigApplicationContext关于注解的扩展类；
+  	在类ClassPathXmlApplicationContext和AnnotationConfigApplicationContext类中都有refresh()方法，中间会初始化很多的组件
+ 	其中就有invokeBeanFactoryPostProcessors(beanFactory)方法，我们就以这个方法为入口，看看源码中对于BeanFactoryPostProcessor
+ 	做了什么。
+ 
+ 一、分析BeanFactory容器的扩展类AnnotationConfigApplicationContext
+ 	通过AnnotationConfigApplication aca = new AnnotationConfigApplicationContext(AopConfig.class);
+ 	进入AnnotationConfigApplicationContext的构造方法：
+ 	1、执行this()方法：
+ 		步骤：执行this()进入无参构造方法中，
+ 		public AnnotationConfigApplicationContext() {
+			this.reader = new AnnotatedBeanDefinitionReader(this);
+			this.scanner = new ClassPathBeanDefinitionScanner(this);
+		}
+		分析无参构造方法中所做的事：
+			a、this.reader = new AnnotatedBeanDefinitionReader(this);
+			该方法定位到AnnotatedBeanDefinitionReader构造方法中，其中有一个AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);
+			就是为DefaultListableBeanFactory事先注册一些组件，比如我们在后面要用到的invokeBeanFactoryPostProcessors(beanFactory)中要用到的
+			ConfigurationClassPostProcessor类就是在这里进行注册，该类事先了BeanFactoryPostProcessor接口，在postProcessBeanDefinitionRegistry()方法中
+			定义了将标注有@Configuration,@Import,@PropertValue,@Bean....注册到Spring容器中去，以及通过注解@ComponentScan标注的packages包下面的标注有
+			@Component类，或者标注@Controller，@Service，@Reposity，的类注册到Spring容器中去（这些注解的元注解是@Component，所以也会被注册到Spring容器中去，
+			在【b】步骤中将分析@ComponentScan扫描的包下面的哪些类会被注册到Spring容器中去）；
+			本次事先注册好的组件有：
+			-----------------------------------------------------------------容器刚开始初始化的主键有-------------------------------------------------------------------------------
+				org.springframework.context.annotation.internalConfigurationAnnotationProcessor = org.springframework.context.annotation.ConfigurationClassPostProcessor
+				org.springframework.context.event.internalEventListenerFactory= org.springframework.context.event.DefaultEventListenerFactory
+				org.springframework.context.event.internalEventListenerProcessor = org.springframework.context.event.EventListenerMethodProcessor
+				org.springframework.context.annotation.internalAutowiredAnnotationProcessor = org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor 
+				org.springframework.context.annotation.internalCommonAnnotationProcessor=org.springframework.context.annotation.CommonAnnotationBeanPostProcessor
+				org.springframework.context.annotation.internalRequiredAnnotationProcessor=org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor
+			-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			
+			b、this.scanner = new ClassPathBeanDefinitionScanner(this);
+			该方法定义了通过注解@ComponentScan扫描的被哪些注解标注的类会被注册到Spring容器中去
+				①、this.includeFilters.add(new AnnotationTypeFilter(Component.class));
+				被@Component标注的类，或者元注解是@Componet的类，其中@Controller，@Service，@Reposity这写注解标注过的类的元注解就是@Component
+				②、this.includeFilters.add(new AnnotationTypeFilter(
+					((Class<? extends Annotation>) ClassUtils.forName("javax.annotation.ManagedBean", cl)), false));
+				③、this.includeFilters.add(new AnnotationTypeFilter(
+					((Class<? extends Annotation>) ClassUtils.forName("javax.inject.Named", cl)), false));
+ 	
+ 	2、执行register(annotatedClasses)方法：
+ 		步骤：
+ 		a、方法：AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(annotatedClass);通过传入的beanClass，
+ 		      创建一个AnnotatatedGennericBeanDefinition对象
+ 		  AnnotatatedGennericBeanDefinition
+ 			属性1、beanClass：class com.richy.spring.aop.AopConfig
+ 			属性2、metadata：StandardAnnotationMetadata对象：
+ 				包含属性：
+ 				属性1、introspectedClass：--->class com.richy.spring.aop.AopConfig
+ 				属性2、annotations:也就是标注在传入类上面的所有的注解：
+ 					[@org.springframework.context.annotation.Configuration(value=),
+ 					 @org.springframework.context.annotation.EnableAspectJAutoProxy(exposeProxy=false, proxyTargetClass=false)]
+ 					 
+ 		b、封装成为BeanDefinitionHolder对象：
+ 			BeanDefinitionHolder definitionHolder = new BeanDefinitionHolder(abd, beanName);
+ 				属性1、beanName:aopConfig
+ 				属性2、上面创建好的 AnnotatedGennericBeanDefinition对象
+ 		
+ 		c、BeanDefinitionReaderUtils.registerBeanDefinition(definitionHolder, this.registry);
+ 			通过registry（DefaultListableBeanFactory）将通过传入的类生成好的BeanDefinitionHolder对象注册到Spring容器中
+ 	
+ 		d、总结：
+ 			AnnotationConfigApplication aca = new AnnotationConfigApplicationContext(AopConfig.class);
+ 			在构造方法中通过调用方法，register(annotatedClasses);将传入的类注册到Spring容器中
+ 			
+ 	3、执行refresh()方法：
+ 		步骤：
+ 		该方法的实现在AbstractApplicationContext类，然后我们分析invokeBeanFactoryPostProcessors(beanFactory)方法，【注册并执行BeanFactory的后置处理器,】
+ 		
+ 		
+ 		-------未完待续-------
+ 
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
