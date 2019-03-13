@@ -5,15 +5,32 @@
     <artifactId>spring-resource-parse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
+  <properties>
+         <project.build.sourceEncoding>
+             UTF-8
+         </project.build.sourceEncoding>
+</properties>
   <artifactId>spring-annotation-excel</artifactId>
   <packaging>war</packaging>
+  <dependencies>
+  		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>3.14</version>
+		</dependency>
+  </dependencies>
   <build>
   	<plugins>
   		<plugin>
-  			<groupId>org.apache.maven.plugins</groupId>
-  			<artifactId>maven-war-plugin</artifactId>
-  			<version>2.4</version>
-  		</plugin>
+		<groupId>org.apache.tomcat.maven</groupId>
+		<artifactId>tomcat7-maven-plugin</artifactId> 
+		<configuration>
+			<!-- 指定端口 -->
+			<port>9093</port>
+			<!-- 请求路径 -->
+			<path>/</path>
+		</configuration>
+   </plugin>
   	</plugins>
   </build>
 </project>
