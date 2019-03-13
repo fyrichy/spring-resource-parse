@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
@@ -30,7 +31,8 @@ public class ExcelController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/export")
-	public void export(HttpServletResponse response)throws Exception{
+	public void export(HttpServletRequest request,HttpServletResponse response)throws Exception{
+		request.setCharacterEncoding("utf-8");
 		List<UserExcelDto> exportData = new ArrayList<UserExcelDto>();
 		for(int i=1;i<=10;i++) {
 			User user = new User(String.valueOf((10+i)), "user"+i, "这是一个user"+i,new Date());
