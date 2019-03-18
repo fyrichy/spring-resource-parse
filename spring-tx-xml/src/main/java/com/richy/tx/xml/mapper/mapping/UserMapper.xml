@@ -13,4 +13,9 @@
 	<select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		SELECT ID,NAME,AGE,SEX FROM t_user WHERE ID = #{id}
 	</select>
+	
+	<!-- 新增用户 -->
+	<insert id="saveUser">
+		insert into t_user(ID,NAME,AGE,SEX) values(#{id},#{name},#{age},#{sex});
+	</insert>
 </mapper>

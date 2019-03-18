@@ -38,4 +38,24 @@
 		<property name="userMapper" ref="userMapper"/>
 	</bean>
 	
+	<!-- 使用TransactionProxyFactory代理UserService -->
+	<bean id="userServiceTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<!-- 原始对象 -->
+		<property name="target" ref="userService"/>
+		<!-- 事务属性 -->
+		<property name="transactionAttributes">
+			<props>
+				<!-- PROPAGATION_REQUIRED -->
+				<prop key="saveUser">PROPAGATION_REQUIRED</prop>
+				<prop key="getById">readOnly</prop>
+			</props>
+		</property>
+		<!-- 事务管理器 -->
+		<property name="transactionManager">
+			<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+				<property name="dataSource" ref="dataSource"/>
+			</bean>
+		</property>
+	</bean>
+	
 </beans>

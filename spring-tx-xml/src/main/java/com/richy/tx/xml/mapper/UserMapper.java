@@ -7,4 +7,6 @@ import com.richy.tx.xml.model.User;
 public interface UserMapper {
 
 	User getById(@Param("id")Integer id);
+	
+	void saveUser(User user);
 }
