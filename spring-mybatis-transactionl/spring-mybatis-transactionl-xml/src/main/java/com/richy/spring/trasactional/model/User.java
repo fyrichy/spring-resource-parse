@@ -1,4 +1,4 @@
-package com.richy.tx.xml.model;
+package com.richy.spring.trasactional.model;
 
 import java.io.Serializable;
 

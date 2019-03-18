@@ -28,6 +28,6 @@
   </environments> -->
   <!-- 配置映射文件：用来配置sql语句和结果集类型等 -->
   <mappers>
-    <mapper resource="com/richy/tx/xml/mapper/mapping/UserMapper.xml"/>
+    <mapper resource="com/richy/spring/trasactional/mapper/mapping/UserMapper.xml"/>
   </mappers>
 </configuration>

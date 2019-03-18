@@ -1,6 +1,6 @@
-package com.richy.tx.xml.service;
+package com.richy.spring.trasactional.service;
 
-import com.richy.tx.xml.model.User;
+import com.richy.spring.trasactional.model.User;
 
 public interface UserService {
 

@@ -1,8 +1,9 @@
-package com.richy.tx.xml.mapper;
+package com.richy.spring.trasactional.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.richy.tx.xml.model.User;
+import com.richy.spring.trasactional.model.User;
+
 
 public interface UserMapper {
 

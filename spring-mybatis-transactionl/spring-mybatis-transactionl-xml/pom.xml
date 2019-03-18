@@ -2,10 +2,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.richy.spring</groupId>
-    <artifactId>spring-resource-parse</artifactId>
+    <artifactId>spring-mybatis-transactionl</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>spring-tx-xml</artifactId>
+  <artifactId>spring-mybatis-transactionl-xml</artifactId>
   <dependencies>
   		<!-- 整合mybatis -->
   		<dependency>

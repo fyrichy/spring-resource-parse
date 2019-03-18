@@ -1,8 +1,8 @@
-package com.richy.tx.xml.service.impl;
+package com.richy.spring.trasactional.service.impl;
 
-import com.richy.tx.xml.mapper.UserMapper;
-import com.richy.tx.xml.model.User;
-import com.richy.tx.xml.service.UserService;
+import com.richy.spring.trasactional.mapper.UserMapper;
+import com.richy.spring.trasactional.model.User;
+import com.richy.spring.trasactional.service.UserService;
 
 public class UserServiceImpl implements UserService{
 
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService{
 	 * @param user
 	 */
 	@Override
-	public void saveUser(User user)throws Exception {
+	public void saveUser(User user)throws Exception{
 		userMapper.saveUser(user);
 		//int a = 2/0;
 	}

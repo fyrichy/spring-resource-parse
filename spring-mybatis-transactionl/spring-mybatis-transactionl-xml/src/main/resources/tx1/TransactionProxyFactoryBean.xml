@@ -29,12 +29,12 @@
      
      <!-- UserMapper代理 -->
 	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.richy.tx.xml.mapper.UserMapper"/>
+		<property name="mapperInterface" value="com.richy.spring.trasactional.mapper.UserMapper"/>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
 	</bean>
 	
 	<!-- userService实例 -->
-	<bean id="userService" class="com.richy.tx.xml.service.impl.UserServiceImpl">
+	<bean id="userService" class="com.richy.spring.trasactional.service.impl.UserServiceImpl">
 		<property name="userMapper" ref="userMapper"/>
 	</bean>
 	
