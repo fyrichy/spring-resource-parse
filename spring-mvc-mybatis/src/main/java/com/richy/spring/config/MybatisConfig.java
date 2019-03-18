@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
@@ -22,7 +26,9 @@ import com.alibaba.druid.pool.DruidDataSource;
 @Configuration
 @MapperScan(basePackages= {"com.richy.spring.mapper"})
 @Import({PropertiesConfig.class})
-public class MybatisConfig {
+//使用事务驱动管理，就好比在xml配置中配置<tx:annotation-driven/>
+@EnableTransactionManagement
+public class MybatisConfig implements TransactionManagementConfigurer{
 	
 	@Autowired
 	PropertiesConfig propertiesConfig;
@@ -66,4 +72,21 @@ public class MybatisConfig {
 		sqlSessionFactoryBean.setMapperLocations(classPathResource.getResources(propertiesConfig.getMapperLocations()));
 		return sqlSessionFactoryBean;
 	}
+	
+	
+	/**
+	 * @descrp：实现接口方法，注册注解事务，当@Transactional 使用的时候产生数据库事务 
+	 * @author：FyRichy
+	 * @time：2019年3月18日上午11:32:18
+	 * @param dataSource
+	 * @return
+	 */
+	@Override
+	@Bean(name="annotationDrivenTransactionManager")
+	public PlatformTransactionManager annotationDrivenTransactionManager() {
+		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+		transactionManager.setDataSource(dataSource());
+		return transactionManager;
+	}
+
 }
